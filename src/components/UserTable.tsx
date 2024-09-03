@@ -97,16 +97,8 @@ const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting }) => {
                             header.getContext()
                           )}
                           {{
-                            asc: <img 
-                              className='table__head-img' 
-                              src="/icons/arrow_up.svg" 
-                              alt="sort" 
-                            />,
-                            desc: <img 
-                              className='table__head-img' 
-                              src="/icons/arrow_down.svg" 
-                              alt="sort" 
-                            />
+                            asc: <svg className='table__head-img' xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#e8eaed"><path d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z"/></svg>,
+                            desc: <svg className='table__head-img' xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#e8eaed"><path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z"/></svg>
                           }[header.column.getIsSorted() as string] ?? null}
                         </div>
                         {header.column.getCanFilter() ? (
