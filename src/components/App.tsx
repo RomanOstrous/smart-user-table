@@ -3,9 +3,8 @@ import { SortingState } from '@tanstack/react-table';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { RootState } from '../app/store';
 import { fetchUsers } from '../app/userSlice';
-import SearchUser from './SearchUser';
 import UserTable from './UserTable';
-
+import '../styles/App.scss';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -15,21 +14,16 @@ function App() {
     if (status === 'idle') {
       dispatch(fetchUsers());
     }
-
-    console.log('aaaaa')
   }, [status, dispatch]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState('');
 
   return (
-    <div className="p-2">
-      <SearchUser globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+    <div className="app">
       <UserTable
         users={users}
         sorting={sorting}
         setSorting={setSorting}
-        globalFilter={globalFilter}
       />
     </div>
   );

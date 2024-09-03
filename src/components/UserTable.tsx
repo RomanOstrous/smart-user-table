@@ -7,37 +7,43 @@ import {
   SortingState,
   useReactTable,
   Updater,
+  ColumnFiltersState,
 } from '@tanstack/react-table';
 import { useMemo } from 'react';
-
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-}
+import { User } from '../types/user';
+import { Filter } from './Filter';
+import '../styles/UserTable.scss';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { RootState } from '../app/store';
+import { setColumnFilter } from '../app/filterSlice';
 
 interface TableProps {
   users: User[];
   sorting: SortingState;
   setSorting: (sorting: SortingState) => void;
-  globalFilter: string;
 }
 
-const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting, globalFilter }) => {
+const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting }) => {
+  const dispatch = useAppDispatch();
+  const columnFilters = useAppSelector((state: RootState) => state.filters.columnFilters);
+
+  const handleColumnFiltersChange = (updaterOrValue: Updater<ColumnFiltersState> | ColumnFiltersState) => {
+    if (typeof updaterOrValue === 'function') {
+      dispatch(setColumnFilter(updaterOrValue(columnFilters)));
+    } else {
+      dispatch(setColumnFilter(updaterOrValue));
+    }
+  };
+  
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
       {
         accessorKey: 'name',
-        cell: info => info.getValue(),
+        header: () => 'Name',
       },
       {
         accessorKey: 'username',
-        cell: info => info.getValue(),
-        header: () => <span>Username</span>,
-        sortUndefined: 'last',
-        sortDescFirst: false,
+        header: () => 'User Name'
       },
       {
         accessorKey: 'email',
@@ -45,8 +51,7 @@ const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting, globalFil
       },
       {
         accessorKey: 'phone',
-        header: () => <span>Phone</span>,
-        sortUndefined: 'last',
+        header: () => 'Phone',
       },
     ],
     []
@@ -58,6 +63,7 @@ const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting, globalFil
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: handleColumnFiltersChange,
     onSortingChange: (updater: Updater<SortingState>) => {
       if (typeof updater === 'function') {
         setSorting(updater(sorting));
@@ -67,58 +73,63 @@ const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting, globalFil
     },
     state: {
       sorting,
-      globalFilter,
+      columnFilters,
     },
   });
 
   return (
-    <table>
-      <thead>
-        {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <th key={header.id} colSpan={header.colSpan}>
-                {header.isPlaceholder ? null : (
-                  <div
-                    className={
-                      header.column.getCanSort()
-                        ? 'cursor-pointer select-none'
-                        : ''
-                    }
-                    onClick={header.column.getToggleSortingHandler()}
-                    title={
-                      header.column.getCanSort()
-                        ? header.column.getNextSortingOrder() === 'asc'
-                          ? 'Sort ascending'
-                          : header.column.getNextSortingOrder() === 'desc'
-                            ? 'Sort descending'
-                            : 'Clear sort'
-                        : undefined
-                    }
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
+    <table className='table'>
+        <thead className='table__head'>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr className='table__head-tr' key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <th className='table__head-th' key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder ? null : (
+                      <>
+                        <div
+                          {...{
+                            onClick: header.column.getToggleSortingHandler(),
+                          }}
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {{
+                            asc: <img 
+                              className='table__head-img' 
+                              src="/icons/arrow_up.svg" 
+                              alt="sort" 
+                            />,
+                            desc: <img 
+                              className='table__head-img' 
+                              src="/icons/arrow_down.svg" 
+                              alt="sort" 
+                            />
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                        {header.column.getCanFilter() ? (
+                          <div>
+                            <Filter column={header.column} />
+                          </div>
+                        ) : null}
+                      </>
                     )}
-                    {{
-                      asc: ' 🔼',
-                      desc: ' 🔽',
-                    }[header.column.getIsSorted() as string] ?? null}
-                  </div>
-                )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
+                  </th>
+                )
+              })}
+            </tr>
+          ))}
+        </thead>
+      <tbody className='table__body'>
         {table
           .getRowModel()
           .rows.slice(0, 10)
           .map(row => (
-            <tr key={row.id}>
+            <tr className='table__body-tr' key={row.id}>
               {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>
+                <td className='table__body-td' key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

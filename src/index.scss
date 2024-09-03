@@ -1,0 +1,30 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./assets/fonts/Roboto-Regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+*:hover {
+  transition: all 0.5s ease;
+}

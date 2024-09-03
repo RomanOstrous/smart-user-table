@@ -23,7 +23,6 @@ const initialState: UsersState = {
     filter: ''
 };
 
-// Асинхронний thunk для отримання користувачів
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
     const response = await axios.get('https://jsonplaceholder.typicode.com/users');
     return response.data as User[];

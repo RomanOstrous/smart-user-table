@@ -1,0 +1,52 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #0e3636;
+
+  &__head {
+    background-color: #287979;
+    color: white;
+
+    &-img {
+      width: 15px;
+      margin-left: 5px;
+    }
+
+    &-th {
+      padding: 10px;
+      text-align: left;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.5s ease;
+
+      &:hover {
+        background-color: #154141;
+      }
+    }
+  }
+
+  &__body {
+    background-color: #319F9F;
+    transition: all 0.5s ease;
+    color: white;
+    &-tr {
+      &:hover {
+        background-color: #256969;
+      }
+
+      &-td {
+        padding: 10px;
+      }
+    }
+  }
+}
+
+.table__head th,
+.table__body td {
+  padding: 10px 15px; // Верхній та нижній відступ - 10px, лівий та правий - 15px
+}
+
+.table {
+  border-spacing: 2px; // Відступи між стовпчиками та рядками
+  border-collapse: separate; // Щоб `border-spacing` працювало
+}
