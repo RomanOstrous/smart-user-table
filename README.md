@@ -1,50 +1,72 @@
-# React + TypeScript + Vite
+# Junior Frontend Developer Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Objective
 
-Currently, two official plugins are available:
+The goal of this task is to evaluate skills in creating a React application using Redux (Classic Redux or Redux Toolkit) and TypeScript. The application includes a user management table with advanced filtering and type safety.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+1. **User Management Table**:
+   - Displays user information fetched from a mock API.
+   - Includes columns for Name, Username, Email, and Phone.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+2. **Advanced Filtering**:
+   - Search inputs for each column (Name, Username, Email, Phone).
+   - Dynamic updates of the table based on user input in these fields.
 
-- Configure the top-level `parserOptions` property like this:
+3. **State Management**:
+   - Uses Redux to manage application state (user data and filter states).
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+4. **Type Safety**:
+   - Comprehensive use of TypeScript to ensure type safety and reduce runtime errors.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+5. **Design and Styling**:
+   - User-friendly and visually appealing table and search inputs.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Getting Started
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Prerequisites
+
+- Node.js and npm (or yarn) installed.
+- A code editor such as VSCode.
+
+### Installation
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/yourusername/your-repository-name.git
+   ```
+
+2. **Navigate to the Project Directory**
+
+   ```bash
+    cd your-repository-name
+   ```
+
+3. **Install Dependencies**
+
+   ```bash
+    npm install
+    # or
+    yarn install
+   ```
+
+
+4. **Start the Development Server**
+
+   ```bash
+    npm run dev
+    # or
+    yarn run dev
+   ```
+
+## Folder Structure
+
+`src/` - Main application source code
+  - `app/` - Contains Redux store and slices
+  - `components/` - Reusable React components
+  - `styles/` - SCSS stylesheets
+  - `types/` - TypeScript type definitions
+  - `main.tsx` - Main application component
+   
