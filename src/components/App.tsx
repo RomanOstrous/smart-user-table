@@ -5,6 +5,7 @@ import { RootState } from '../app/store';
 import { fetchUsers } from '../app/userSlice';
 import UserTable from './UserTable';
 import '../styles/App.scss';
+import { Loader } from './Loader';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -20,11 +21,15 @@ function App() {
 
   return (
     <div className="app">
-      <UserTable
-        users={users}
-        sorting={sorting}
-        setSorting={setSorting}
-      />
+    {
+      status === 'loading' 
+      ? <Loader /> 
+      : <UserTable
+          users={users}
+          sorting={sorting}
+          setSorting={setSorting}
+        />
+    }
     </div>
   );
 }
