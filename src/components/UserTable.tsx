@@ -8,14 +8,11 @@ import {
   useReactTable,
   Updater,
   ColumnFiltersState,
-} from '@tanstack/react-table';
-import { useMemo } from 'react';
-import { User } from '../types/user';
-import { Filter } from './Filter';
-import '../styles/UserTable.scss';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { RootState } from '../app/store';
-import { setColumnFilter } from '../app/filterSlice';
+} from "@tanstack/react-table";
+import { useMemo, useState } from "react";
+import { User } from "../types/user";
+import { Filter } from "./Filter";
+import "../styles/UserTable.scss";
 
 interface TableProps {
   users: User[];
@@ -24,37 +21,28 @@ interface TableProps {
 }
 
 const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting }) => {
-  const dispatch = useAppDispatch();
-  const columnFilters = useAppSelector((state: RootState) => state.filters.columnFilters);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const handleColumnFiltersChange = (updaterOrValue: Updater<ColumnFiltersState> | ColumnFiltersState) => {
-    if (typeof updaterOrValue === 'function') {
-      dispatch(setColumnFilter(updaterOrValue(columnFilters)));
-    } else {
-      dispatch(setColumnFilter(updaterOrValue));
-    }
-  };
-  
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
       {
-        accessorKey: 'name',
-        header: () => 'Name',
+        accessorKey: "name",
+        header: () => "Name",
       },
       {
-        accessorKey: 'username',
-        header: () => 'User Name'
+        accessorKey: "username",
+        header: () => "User Name",
       },
       {
-        accessorKey: 'email',
-        header: () => 'Email',
+        accessorKey: "email",
+        header: () => "Email",
       },
       {
-        accessorKey: 'phone',
-        header: () => 'Phone',
+        accessorKey: "phone",
+        header: () => "Phone",
       },
     ],
-    []
+    [],
   );
 
   const table = useReactTable({
@@ -63,9 +51,9 @@ const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting }) => {
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: handleColumnFiltersChange,
+    onColumnFiltersChange: setColumnFilters,
     onSortingChange: (updater: Updater<SortingState>) => {
-      if (typeof updater === 'function') {
+      if (typeof updater === "function") {
         setSorting(updater(sorting));
       } else {
         setSorting(updater);
@@ -78,50 +66,76 @@ const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting }) => {
   });
 
   return (
-    <table className='table'>
-        <thead className='table__head'>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr className='table__head-tr' key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <th className='table__head-th' key={header.id} colSpan={header.colSpan}>
-                    {header.isPlaceholder ? null : (
-                      <>
-                        <div
-                          {...{
-                            onClick: header.column.getToggleSortingHandler(),
-                          }}
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                          {{
-                            asc: <svg className='table__head-img' xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#e8eaed"><path d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z"/></svg>,
-                            desc: <svg className='table__head-img' xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#e8eaed"><path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z"/></svg>
-                          }[header.column.getIsSorted() as string] ?? null}
+    <table className="table">
+      <thead className="table__head">
+        {table.getHeaderGroups().map((headerGroup) => (
+          <tr className="table__head-tr" key={headerGroup.id}>
+            {headerGroup.headers.map((header) => {
+              return (
+                <th
+                  className="table__head-th"
+                  key={header.id}
+                  colSpan={header.colSpan}
+                >
+                  {header.isPlaceholder ? null : (
+                    <>
+                      <div
+                        {...{
+                          onClick: header.column.getToggleSortingHandler(),
+                        }}
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                        {{
+                          asc: (
+                            <svg
+                              className="table__head-img"
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="14px"
+                              viewBox="0 -960 960 960"
+                              width="14px"
+                              fill="#e8eaed"
+                            >
+                              <path d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z" />
+                            </svg>
+                          ),
+                          desc: (
+                            <svg
+                              className="table__head-img"
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="14px"
+                              viewBox="0 -960 960 960"
+                              width="14px"
+                              fill="#e8eaed"
+                            >
+                              <path d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z" />
+                            </svg>
+                          ),
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
+                      {header.column.getCanFilter() ? (
+                        <div>
+                          <Filter column={header.column} />
                         </div>
-                        {header.column.getCanFilter() ? (
-                          <div>
-                            <Filter column={header.column} />
-                          </div>
-                        ) : null}
-                      </>
-                    )}
-                  </th>
-                )
-              })}
-            </tr>
-          ))}
-        </thead>
-      <tbody className='table__body'>
+                      ) : null}
+                    </>
+                  )}
+                </th>
+              );
+            })}
+          </tr>
+        ))}
+      </thead>
+      <tbody className="table__body">
         {table
           .getRowModel()
           .rows.slice(0, 10)
-          .map(row => (
-            <tr className='table__body-tr' key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <td className='table__body-td' key={cell.id}>
+          .map((row) => (
+            <tr className="table__body-tr" key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td className="table__body-td" key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

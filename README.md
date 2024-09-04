@@ -7,17 +7,21 @@ The goal of this task is to evaluate skills in creating a React application usin
 ## Features
 
 1. **User Management Table**:
+
    - Displays user information fetched from a mock API.
    - Includes columns for Name, Username, Email, and Phone.
 
 2. **Advanced Filtering**:
+
    - Search inputs for each column (Name, Username, Email, Phone).
    - Dynamic updates of the table based on user input in these fields.
 
 3. **State Management**:
+
    - Uses Redux to manage application state (user data and filter states).
 
 4. **Type Safety**:
+
    - Comprehensive use of TypeScript to ensure type safety and reduce runtime errors.
 
 5. **Design and Styling**:
@@ -52,7 +56,6 @@ The goal of this task is to evaluate skills in creating a React application usin
     yarn install
    ```
 
-
 4. **Start the Development Server**
 
    ```bash
@@ -64,9 +67,13 @@ The goal of this task is to evaluate skills in creating a React application usin
 ## Folder Structure
 
 `src/` - Main application source code
-  - `app/` - Contains Redux store and slices
-  - `components/` - Reusable React components
-  - `styles/` - SCSS stylesheets
-  - `types/` - TypeScript type definitions
-  - `main.tsx` - Main application component
-   
+
+- `app/` - Contains Redux store and slices
+- `components/` - Reusable React components
+- `styles/` - SCSS stylesheets
+- `types/` - TypeScript type definitions
+- `main.tsx` - Main application component
+
+## Deliverables
+  `GitHub Repository:` https://github.com/RomanOstrous/smart-user-table
+  `Demo Link:` https://romanostrous.github.io/smart-user-table/

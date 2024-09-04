@@ -26,7 +26,7 @@
   }
 
   &__body {
-    background-color: #319F9F;
+    background-color: #319f9f;
     transition: all 0.5s ease;
     color: white;
     &-tr {
@@ -43,10 +43,10 @@
 
 .table__head th,
 .table__body td {
-  padding: 10px 15px; // Верхній та нижній відступ - 10px, лівий та правий - 15px
+  padding: 10px 15px;
 }
 
 .table {
-  border-spacing: 2px; // Відступи між стовпчиками та рядками
-  border-collapse: separate; // Щоб `border-spacing` працювало
+  border-spacing: 2px;
+  border-collapse: separate;
 }

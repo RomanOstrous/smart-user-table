@@ -1,5 +1,5 @@
-import { Column } from "@tanstack/react-table"
-import { DebouncedInput } from "./DebounseFilter"
+import { Column } from "@tanstack/react-table";
+import { DebouncedInput } from "./DebounseFilter";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function Filter({ column }: { column: Column<any, unknown> }) {
@@ -8,10 +8,10 @@ export function Filter({ column }: { column: Column<any, unknown> }) {
   return (
     <DebouncedInput
       className=""
-      onChange={value => column.setFilterValue(value)}
+      onChange={(value) => column.setFilterValue(value)}
       placeholder={`Search...`}
       type="text"
-      value={(columnFilterValue ?? '') as string}
+      value={(columnFilterValue ?? "") as string}
     />
-  )
+  );
 }

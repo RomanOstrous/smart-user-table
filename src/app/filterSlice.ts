@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ColumnFiltersState } from '@tanstack/react-table';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ColumnFiltersState } from "@tanstack/react-table";
 
 interface FilterState {
   columnFilters: ColumnFiltersState;
@@ -10,7 +10,7 @@ const initialState: FilterState = {
 };
 
 export const filtersSlice = createSlice({
-  name: 'filters',
+  name: "filters",
   initialState,
   reducers: {
     setColumnFilter: (state, action: PayloadAction<ColumnFiltersState>) => {

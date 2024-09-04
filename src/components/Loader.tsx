@@ -1,5 +1,4 @@
-
-import '../styles/Loader.scss';
+import "../styles/Loader.scss";
 
 export const Loader = () => (
   <div className="Loader">
