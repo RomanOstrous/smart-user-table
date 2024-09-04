@@ -65,6 +65,8 @@ const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting }) => {
     },
   });
 
+  const rows = table.getRowModel().rows.slice(0, 10);
+
   return (
     <table className="table">
       <thead className="table__head">
@@ -129,10 +131,8 @@ const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting }) => {
         ))}
       </thead>
       <tbody className="table__body">
-        {table
-          .getRowModel()
-          .rows.slice(0, 10)
-          .map((row) => (
+        {rows.length > 0 ? (
+          rows.map((row) => (
             <tr className="table__body-tr" key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <td className="table__body-td" key={cell.id}>
@@ -140,7 +140,14 @@ const UserTable: React.FC<TableProps> = ({ users, sorting, setSorting }) => {
                 </td>
               ))}
             </tr>
-          ))}
+          ))
+        ) : (
+          <tr className="table__body-tr">
+            <td className="table__body-td--notf" colSpan={columns.length}>
+              No result found
+            </td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

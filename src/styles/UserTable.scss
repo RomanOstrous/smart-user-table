@@ -1,9 +1,11 @@
 .table {
   width: 100%;
-  border-collapse: collapse;
+  border-spacing: 2px;
+  border-collapse: separate;
   background-color: #0e3636;
 
   &__head {
+    padding: 10px 15px;
     background-color: #287979;
     color: white;
 
@@ -26,16 +28,22 @@
   }
 
   &__body {
+    padding: 10px 15px;
     background-color: #319f9f;
     transition: all 0.5s ease;
     color: white;
+
     &-tr {
       &:hover {
         background-color: #256969;
       }
+    }
 
-      &-td {
-        padding: 10px;
+    &-td {
+      padding: 10px;
+
+      &--notf {
+        text-align: center;
       }
     }
   }
@@ -44,9 +52,4 @@
 .table__head th,
 .table__body td {
   padding: 10px 15px;
-}
-
-.table {
-  border-spacing: 2px;
-  border-collapse: separate;
 }
