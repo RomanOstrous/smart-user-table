@@ -76,4 +76,5 @@ The goal of this task is to evaluate skills in creating a React application usin
 
 ## Deliverables
   `GitHub Repository:` https://github.com/RomanOstrous/smart-user-table
+  
   `Demo Link:` https://romanostrous.github.io/smart-user-table/
